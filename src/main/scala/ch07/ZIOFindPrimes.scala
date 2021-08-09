@@ -30,9 +30,9 @@ object ZIOFindPrimes extends App {
 
   def findPrimes(randomNums: Vector[Int], numFibers: Int): UIO[(Long, Int)] =
     for {
-      start <- Clock.Service.live.currentTime(TimeUnit.MILLISECONDS)
+      start  <- Clock.Service.live.currentTime(TimeUnit.MILLISECONDS)
       primes <- ZIO.collectParN(numFibers)(splitVector(randomNums, numFibers))(identifyPrimes)
-      end <- Clock.Service.live.currentTime(TimeUnit.MILLISECONDS)
+      end    <- Clock.Service.live.currentTime(TimeUnit.MILLISECONDS)
     } yield (end - start, primes.flatten.size)
 
   def findOptimalNumFibers(randomNums: Vector[Int], numFibers: Int): UIO[Int] = {
